@@ -27,15 +27,12 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //setting Entity configurations and realations. See Configurations
             modelBuilder.ApplyConfiguration(new DepartmentConfiguration());
             modelBuilder.ApplyConfiguration(new LectureConfiguration());
             modelBuilder.ApplyConfiguration(new StudentConfiguration());
-
-            //builder.ToTable("DepartmentsLectures");
-            //builder.HasKey(dl => new { dl.DepartmentId, dl.LectureId });
-
-                
-
+            modelBuilder.ApplyConfiguration(new StudentLectureConfiguration());
+            modelBuilder.ApplyConfiguration(new DepartmentLectureConfiguration());
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     internal class Department
     {
-        public string DepartmentId { get; set; }
+        public int DepartmentId { get; set; }    //string 3 sk 3 raides
         public string Name { get; set; }
         public ICollection<Student> Students { get; set; }
         public ICollection<Lecture> Lectures { get; set; }

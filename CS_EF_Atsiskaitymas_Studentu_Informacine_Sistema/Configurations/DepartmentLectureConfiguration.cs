@@ -17,7 +17,13 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
             builder.ToTable("DepartmentsLectures");
             builder.HasKey(dl => new { dl.DepartmentId, dl.LectureId });
 
+            builder.HasOne(d => d.Department)
+                .WithMany(dl => dl.DepartmentLectures)
+                .HasForeignKey(d => d.DepartmentId);
 
+            builder.HasOne(l => l.Lecture)
+                .WithMany(dl => dl.DepartmentLectures)
+                .HasForeignKey(l => l.LectureId);
         }
     }
 }

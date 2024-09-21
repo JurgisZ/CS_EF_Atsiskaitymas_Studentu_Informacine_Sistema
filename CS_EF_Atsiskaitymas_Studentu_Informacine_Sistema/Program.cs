@@ -9,8 +9,9 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema
             Console.WriteLine("Studentu informacine sistema");
 
             using var context = new StudentsDbContext();
-            context.Database.EnsureCreated();
             context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
+
         }
     }
 }

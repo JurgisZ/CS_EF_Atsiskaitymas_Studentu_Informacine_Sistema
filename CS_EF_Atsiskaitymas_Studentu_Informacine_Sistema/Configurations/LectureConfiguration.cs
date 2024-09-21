@@ -31,11 +31,11 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
                 .WithMany(l => l.Lectures)
                 .UsingEntity<DepartmentLecture>(
 
-                    d => d.HasOne<Department>(d => d.Department)
+                    d => d.HasOne(d => d.Department)
                         .WithMany(dl => dl.DepartmentLectures)
                         .HasForeignKey(l => l.LectureId),
                 
-                    l => l.HasOne<Lecture>(l => l.Lecture)
+                    l => l.HasOne(l => l.Lecture)
                         .WithMany(dl => dl.DepartmentLectures)
                         .HasForeignKey(d => d.DepartmentId));
 
@@ -44,11 +44,11 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
                 .WithMany(l => l.Lectures)
                 .UsingEntity<StudentLecture>(
 
-                    s => s.HasOne<Student>(s => s.Student)
+                    s => s.HasOne(s => s.Student)
                         .WithMany(sl => sl.StudentLectures)
                         .HasForeignKey(s => s.StudentId),
                     
-                    l => l.HasOne<Lecture>(l => l.Lecture)
+                    l => l.HasOne(l => l.Lecture)
                         .WithMany(sl => sl.StudentLectures)
                         .HasForeignKey(s => s.StudentId));
 
