@@ -15,7 +15,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
         public void Configure(EntityTypeBuilder<DepartmentLecture> builder)
         {
             builder.ToTable("DepartmentsLectures");
-            builder.HasKey(dl => new { dl.DepartmentId, dl.LectureId });
+            builder.HasKey(dl => new { dl.DepartmentId, dl.LectureName });
 
             builder.HasOne(d => d.Department)
                 .WithMany(dl => dl.DepartmentLectures)
@@ -23,7 +23,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 
             builder.HasOne(l => l.Lecture)
                 .WithMany(dl => dl.DepartmentLectures)
-                .HasForeignKey(l => l.LectureId);
+                .HasForeignKey(l => l.LectureName);
         }
     }
 }

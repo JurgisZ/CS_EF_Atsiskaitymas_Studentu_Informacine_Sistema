@@ -14,13 +14,11 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
         public void Configure(EntityTypeBuilder<Lecture> builder)
         {
             builder.ToTable("Lectures");
-            builder.HasKey(e => e.LectureId);
+            builder.HasKey(e => e.LectureName);
 
-            builder.Property(e => e.LectureId)
+            builder.Property(e => e.LectureName)
                 .ValueGeneratedNever()
-                .IsRequired();
-
-            builder.Property(e => e.Name)
+                .IsRequired()
                 .HasMaxLength(255);
 
             builder.Property(e => e.Time)
@@ -33,7 +31,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 
                     d => d.HasOne(d => d.Department)
                         .WithMany(dl => dl.DepartmentLectures)
-                        .HasForeignKey(l => l.LectureId),
+                        .HasForeignKey(l => l.LectureName),
                 
                     l => l.HasOne(l => l.Lecture)
                         .WithMany(dl => dl.DepartmentLectures)

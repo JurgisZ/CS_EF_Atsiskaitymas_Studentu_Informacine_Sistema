@@ -15,7 +15,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 name: "Departments",
                 columns: table => new
                 {
-                    DepartmentId = table.Column<int>(type: "int", maxLength: 6, nullable: false),
+                    DepartmentId = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -27,13 +27,12 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 name: "Lectures",
                 columns: table => new
                 {
-                    LectureId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    LectureName = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Time = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lectures", x => x.LectureId);
+                    table.PrimaryKey("PK_Lectures", x => x.LectureName);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,7 +43,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    DepartmentId = table.Column<int>(type: "int", nullable: false)
+                    DepartmentId = table.Column<string>(type: "nvarchar(6)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,12 +60,12 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 name: "DepartmentsLectures",
                 columns: table => new
                 {
-                    DepartmentId = table.Column<int>(type: "int", nullable: false),
-                    LectureId = table.Column<int>(type: "int", nullable: false)
+                    DepartmentId = table.Column<string>(type: "nvarchar(6)", nullable: false),
+                    LectureName = table.Column<string>(type: "nvarchar(255)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DepartmentsLectures", x => new { x.DepartmentId, x.LectureId });
+                    table.PrimaryKey("PK_DepartmentsLectures", x => new { x.DepartmentId, x.LectureName });
                     table.ForeignKey(
                         name: "FK_DepartmentsLectures_Departments_DepartmentId",
                         column: x => x.DepartmentId,
@@ -74,10 +73,10 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                         principalColumn: "DepartmentId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_DepartmentsLectures_Lectures_LectureId",
-                        column: x => x.LectureId,
+                        name: "FK_DepartmentsLectures_Lectures_LectureName",
+                        column: x => x.LectureName,
                         principalTable: "Lectures",
-                        principalColumn: "LectureId",
+                        principalColumn: "LectureName",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -85,17 +84,17 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 name: "StudentLectures",
                 columns: table => new
                 {
-                    LectureId = table.Column<int>(type: "int", nullable: false),
+                    LectureName = table.Column<string>(type: "nvarchar(255)", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentLectures", x => new { x.StudentId, x.LectureId });
+                    table.PrimaryKey("PK_StudentLectures", x => new { x.StudentId, x.LectureName });
                     table.ForeignKey(
-                        name: "FK_StudentLectures_Lectures_LectureId",
-                        column: x => x.LectureId,
+                        name: "FK_StudentLectures_Lectures_LectureName",
+                        column: x => x.LectureName,
                         principalTable: "Lectures",
-                        principalColumn: "LectureId",
+                        principalColumn: "LectureName",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_StudentLectures_Students_StudentId",
@@ -106,14 +105,14 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_DepartmentsLectures_LectureId",
+                name: "IX_DepartmentsLectures_LectureName",
                 table: "DepartmentsLectures",
-                column: "LectureId");
+                column: "LectureName");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentLectures_LectureId",
+                name: "IX_StudentLectures_LectureName",
                 table: "StudentLectures",
-                column: "LectureId");
+                column: "LectureName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_DepartmentId",

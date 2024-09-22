@@ -8,7 +8,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities
 {
     internal class StudentLecture
     {
-        public int LectureId { get; set; }
+        public string LectureName { get; set; }
         public Lecture Lecture { get; set; }
         public int StudentId { get; set; }
         public Student Student { get; set; }

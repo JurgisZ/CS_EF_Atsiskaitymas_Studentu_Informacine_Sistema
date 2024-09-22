@@ -37,7 +37,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 
                 d => d.HasOne<Lecture>(l => l.Lecture)
                     .WithMany(d => d.DepartmentLectures)
-                    .HasForeignKey(dl => dl.LectureId),
+                    .HasForeignKey(dl => dl.LectureName),
 
                 l => l.HasOne<Department>(d => d.Department)
                     .WithMany(l => l.DepartmentLectures)

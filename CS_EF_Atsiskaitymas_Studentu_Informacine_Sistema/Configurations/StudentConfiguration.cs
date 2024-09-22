@@ -42,7 +42,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
                 .UsingEntity<StudentLecture>(
                 l => l.HasOne(l => l.Lecture)
                     .WithMany(sl => sl.StudentLectures)
-                    .HasForeignKey(l => l.LectureId),
+                    .HasForeignKey(l => l.LectureName),
 
                 s => s.HasOne(s => s.Student)
                     .WithMany(sl => sl.StudentLectures)
