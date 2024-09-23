@@ -17,27 +17,27 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
             builder.HasKey(e => e.DepartmentId);
 
             builder.Property(e => e.DepartmentId) //Id string, 3 letters + 3 numbers
-                .ValueGeneratedNever()
+                .ValueGeneratedOnAdd()
                 .IsRequired()
                 .HasMaxLength(6);
 
-            builder.Property(e => e.Name)
+            builder.Property(e => e.DepartmentName)
                  .HasMaxLength(100)
                  .IsRequired();
 
-            //students OtM
+            //OtM Students
             builder.HasMany(s => s.Students)
                 .WithOne(d => d.Department)
                 .HasForeignKey(s => s.StudentId);
 
-            //department-lectures
+            //MtM Lectures <DepartmentLectures>
             builder.HasMany(l => l.Lectures)
                 .WithMany(d => d.Departments)
                 .UsingEntity<DepartmentLecture>(
 
                 d => d.HasOne<Lecture>(l => l.Lecture)
                     .WithMany(d => d.DepartmentLectures)
-                    .HasForeignKey(dl => dl.LectureName),
+                    .HasForeignKey(dl => dl.LectureId),
 
                 l => l.HasOne<Department>(d => d.Department)
                     .WithMany(l => l.DepartmentLectures)

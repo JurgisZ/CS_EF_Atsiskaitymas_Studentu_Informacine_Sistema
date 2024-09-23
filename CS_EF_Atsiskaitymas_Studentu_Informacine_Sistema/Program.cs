@@ -6,11 +6,8 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Studentu informacine sistema");
-
-            using var context = new StudentsDbContext();
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            var studentIs = new StudentsIS();
+            studentIs.Run();
 
         }
     }

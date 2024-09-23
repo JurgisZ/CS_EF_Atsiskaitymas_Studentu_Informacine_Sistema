@@ -14,28 +14,33 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
         public void Configure(EntityTypeBuilder<Lecture> builder)
         {
             builder.ToTable("Lectures");
-            builder.HasKey(e => e.LectureName);
+            builder.HasKey(e => e.LectureId);
 
-            builder.Property(e => e.LectureName)
-                .ValueGeneratedNever()
+            builder.Property(e => e.LectureId)
+                .ValueGeneratedOnAdd()
                 .IsRequired()
                 .HasMaxLength(255);
 
             builder.Property(e => e.Time)
                 .IsRequired();
 
-            //Many to many Departments
-            builder.HasMany(d => d.Departments)
-                .WithMany(l => l.Lectures)
-                .UsingEntity<DepartmentLecture>(
 
-                    d => d.HasOne(d => d.Department)
-                        .WithMany(dl => dl.DepartmentLectures)
-                        .HasForeignKey(l => l.LectureName),
-                
-                    l => l.HasOne(l => l.Lecture)
-                        .WithMany(dl => dl.DepartmentLectures)
-                        .HasForeignKey(d => d.DepartmentId));
+            builder.Property(e => e.Duration)
+            .IsRequired();
+
+            //Aprasyta Departments
+            //Many to many Departments
+            //builder.HasMany(d => d.Departments)
+            //    .WithMany(l => l.Lectures)
+            //    .UsingEntity<DepartmentLecture>(
+
+            //        d => d.HasOne(d => d.Department)
+            //            .WithMany(dl => dl.DepartmentLectures)
+            //            .HasForeignKey(l => l.LectureName),
+
+            //        l => l.HasOne(l => l.Lecture)
+            //            .WithMany(dl => dl.DepartmentLectures)
+            //            .HasForeignKey(d => d.DepartmentId));
 
             //Many to many Students
             builder.HasMany(s => s.Students)
@@ -48,7 +53,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
                     
                     l => l.HasOne(l => l.Lecture)
                         .WithMany(sl => sl.StudentLectures)
-                        .HasForeignKey(s => s.StudentId));
+                        .HasForeignKey(s => s.LectureId));
 
         }
     }

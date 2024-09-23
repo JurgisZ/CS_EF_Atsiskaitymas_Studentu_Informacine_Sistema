@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
 {
     [DbContext(typeof(StudentsDbContext))]
-    [Migration("20240921121821_Initial")]
+    [Migration("20240923111752_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -27,11 +27,18 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
 
             modelBuilder.Entity("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.Department", b =>
                 {
-                    b.Property<string>("DepartmentId")
+                    b.Property<int>("DepartmentId")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(6)
-                        .HasColumnType("nvarchar(6)");
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"));
+
+                    b.Property<string>("DepartmentCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DepartmentName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -39,45 +46,109 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                     b.HasKey("DepartmentId");
 
                     b.ToTable("Departments", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentId = 1,
+                            DepartmentCode = "CS1234",
+                            DepartmentName = "ComputerScience"
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            DepartmentCode = "MTH567",
+                            DepartmentName = "Mathematics"
+                        });
                 });
 
             modelBuilder.Entity("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.DepartmentLecture", b =>
                 {
-                    b.Property<string>("DepartmentId")
-                        .HasColumnType("nvarchar(6)");
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("LectureName")
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("LectureId")
+                        .HasColumnType("int");
 
-                    b.HasKey("DepartmentId", "LectureName");
+                    b.HasKey("DepartmentId", "LectureId");
 
-                    b.HasIndex("LectureName");
+                    b.HasIndex("LectureId");
 
                     b.ToTable("DepartmentsLectures", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentId = 1,
+                            LectureId = 1
+                        },
+                        new
+                        {
+                            DepartmentId = 1,
+                            LectureId = 2
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            LectureId = 3
+                        });
                 });
 
             modelBuilder.Entity("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.Lecture", b =>
                 {
-                    b.Property<string>("LectureName")
+                    b.Property<int>("LectureId")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LectureId"));
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<string>("LectureName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan>("Time")
                         .HasColumnType("time");
 
-                    b.HasKey("LectureName");
+                    b.HasKey("LectureId");
 
                     b.ToTable("Lectures", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            LectureId = 1,
+                            Duration = new TimeSpan(0, 11, 30, 0, 0),
+                            LectureName = "Algorithms",
+                            Time = new TimeSpan(0, 10, 0, 0, 0)
+                        },
+                        new
+                        {
+                            LectureId = 2,
+                            Duration = new TimeSpan(0, 13, 30, 0, 0),
+                            LectureName = "Calculus",
+                            Time = new TimeSpan(0, 12, 0, 0, 0)
+                        },
+                        new
+                        {
+                            LectureId = 3,
+                            Duration = new TimeSpan(0, 15, 30, 0, 0),
+                            LectureName = "DataStructures",
+                            Time = new TimeSpan(0, 14, 0, 0, 0)
+                        });
                 });
 
             modelBuilder.Entity("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.Student", b =>
                 {
                     b.Property<int>("StudentId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("DepartmentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(6)");
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -94,11 +165,34 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("StudentCode")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
                     b.HasKey("StudentId");
 
-                    b.HasIndex("DepartmentId");
-
                     b.ToTable("Students", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            StudentId = 1,
+                            DepartmentId = 1,
+                            Email = "john.smith@example.com",
+                            LastName = "Smith",
+                            Name = "John",
+                            StudentCode = "12345678"
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            DepartmentId = 2,
+                            Email = "alice.johnson@example.com",
+                            LastName = "Johnson",
+                            Name = "Alice",
+                            StudentCode = "87654321"
+                        });
                 });
 
             modelBuilder.Entity("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.StudentLecture", b =>
@@ -106,14 +200,31 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("LectureName")
-                        .HasColumnType("nvarchar(255)");
+                    b.Property<int>("LectureId")
+                        .HasColumnType("int");
 
-                    b.HasKey("StudentId", "LectureName");
+                    b.HasKey("StudentId", "LectureId");
 
-                    b.HasIndex("LectureName");
+                    b.HasIndex("LectureId");
 
                     b.ToTable("StudentLectures", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            StudentId = 1,
+                            LectureId = 1
+                        },
+                        new
+                        {
+                            StudentId = 1,
+                            LectureId = 3
+                        },
+                        new
+                        {
+                            StudentId = 2,
+                            LectureId = 2
+                        });
                 });
 
             modelBuilder.Entity("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.DepartmentLecture", b =>
@@ -126,7 +237,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
 
                     b.HasOne("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.Lecture", "Lecture")
                         .WithMany("DepartmentLectures")
-                        .HasForeignKey("LectureName")
+                        .HasForeignKey("LectureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -139,7 +250,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 {
                     b.HasOne("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("DepartmentId")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -150,7 +261,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 {
                     b.HasOne("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.Lecture", "Lecture")
                         .WithMany("StudentLectures")
-                        .HasForeignKey("LectureName")
+                        .HasForeignKey("LectureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
