@@ -2,7 +2,7 @@
 {
     internal class Department
     {
-        public required int DepartmentId { get; set; }    
+        public int DepartmentId { get; set; }    
         public required string DepartmentCode { get; set; }     //string. 3 letters + 3 numbers
         public required string DepartmentName { get; set; }     //string 3 - 100 symbols
         public ICollection<Student> Students { get; set; }

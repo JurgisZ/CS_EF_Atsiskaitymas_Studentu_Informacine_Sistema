@@ -1,5 +1,6 @@
 ﻿using CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Contexts;
 using CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities;
+using CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
 {
-    internal class DepartmentRepository
+    internal class DepartmentRepository : IDepartmentRepository
     {
         private readonly StudentsDbContext _context;
         public DepartmentRepository(StudentsDbContext context)
@@ -20,10 +21,11 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
         }
 
         //CREATE - patikrinti ar dpt name yra unikalus
-        public void Create(Department department) 
-        { 
+        public int Create(Department department)
+        {
             _context.Add(department);
             _context.SaveChanges();
+            return department.DepartmentId;
         }
 
         public Department? GetById(int id)
@@ -39,8 +41,8 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
             return _context.Departments.ToList();
         }
 
-        public void Update(Department department) 
-        { 
+        public void Update(Department department)
+        {
             _context.Departments.Update(department);
             _context.SaveChanges();
         }

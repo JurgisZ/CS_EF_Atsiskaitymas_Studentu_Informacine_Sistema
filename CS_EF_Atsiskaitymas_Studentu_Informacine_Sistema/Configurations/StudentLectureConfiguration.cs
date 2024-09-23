@@ -15,14 +15,6 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
         {
             builder.ToTable("StudentLectures");
             builder.HasKey(sl => new { sl.StudentId, sl.LectureId });
-
-            //builder.HasOne(s => s.Student)
-            //    .WithMany(sl => sl.StudentLectures)
-            //    .HasForeignKey(s => s.StudentId);
-
-            //builder.HasOne(l => l.Lecture)
-            //    .WithMany(l => l.StudentLectures)
-            //    .HasForeignKey(l => l.LectureName);
         }
     }
 }

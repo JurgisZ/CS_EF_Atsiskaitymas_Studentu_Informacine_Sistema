@@ -20,29 +20,15 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
                 .ValueGeneratedOnAdd()
                 .IsRequired()
                 .HasMaxLength(255);
+            builder.Property(e => e.LectureName)
+                .IsRequired();  //Lenght >= 5
 
             builder.Property(e => e.Time)
                 .IsRequired();
 
-
             builder.Property(e => e.Duration)
             .IsRequired();
 
-            //Aprasyta Departments
-            //Many to many Departments
-            //builder.HasMany(d => d.Departments)
-            //    .WithMany(l => l.Lectures)
-            //    .UsingEntity<DepartmentLecture>(
-
-            //        d => d.HasOne(d => d.Department)
-            //            .WithMany(dl => dl.DepartmentLectures)
-            //            .HasForeignKey(l => l.LectureName),
-
-            //        l => l.HasOne(l => l.Lecture)
-            //            .WithMany(dl => dl.DepartmentLectures)
-            //            .HasForeignKey(d => d.DepartmentId));
-
-            //Many to many Students
             builder.HasMany(s => s.Students)
                 .WithMany(l => l.Lectures)
                 .UsingEntity<StudentLecture>(
