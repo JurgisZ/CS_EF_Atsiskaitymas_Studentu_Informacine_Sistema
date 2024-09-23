@@ -43,9 +43,9 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
             _context.SaveChanges();
         }
 
-        public List<Lecture> GetLecturesByDepartment(Department department)
-        {
+        //public List<Lecture> GetLecturesByDepartment(Department department)
+        //{
 
-        }
+        //}
     }
 }
