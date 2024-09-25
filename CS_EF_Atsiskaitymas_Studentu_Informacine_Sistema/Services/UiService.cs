@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
 {
-    internal class UiService
+    public class UiService
     {
         private readonly IDepartmentService _departmentService;
 
@@ -49,13 +49,10 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
                         //Create new department
                         Console.Write("Enter a name for new department: ");
                         var departmentName = UserInputGetString();
+                        //Validate department name
 
+                        //var newDepartment = new Department()
 
-                        var newDepartment = new Department()
-                        {
-                            DepartmentCode = _departmentService
-                        };
-                        _departmentService.CreateDepartment(newDepartment);
                         break;
                 }
 

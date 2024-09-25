@@ -1,6 +1,7 @@
 ﻿using CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Contexts;
 using CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities;
 using CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
 {
-    internal class LectureRepository : ILectureRepository
+    public class LectureRepository : ILectureRepository
     {
         private readonly StudentsDbContext _context;
         public LectureRepository(StudentsDbContext context)
@@ -31,8 +32,27 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
 
         public List<Lecture> GetAll()
         {
-            return _context.Lectures.ToList();
+            return _context.Lectures
+                .Include(d => d.Departments)
+                .Include(s => s.Students)
+                .ToList();
         }
+
+        public Lecture? GetLectureByName(string lectureName) 
+        {
+            return _context.Lectures
+                .Include(d => d.Departments)
+                .Include(s => s.Students)
+                .FirstOrDefault(l => l.LectureName == lectureName);
+        }
+
+        //public Department? GetDepartmentByCode(string code)
+        //{
+        //    return _context.Departments
+        //        .Include(s => s.Students)
+        //        .Include(l => l.Lectures)
+        //        .FirstOrDefault(d => d.DepartmentCode == code);
+        //}
 
         public void Update(Lecture lecture)
         {

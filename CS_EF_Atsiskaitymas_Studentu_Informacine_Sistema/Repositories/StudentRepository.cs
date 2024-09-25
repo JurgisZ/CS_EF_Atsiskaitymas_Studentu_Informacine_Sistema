@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
 {
-    internal class StudentRepository : IStudentRepository
+    public class StudentRepository : IStudentRepository
     {
         private readonly StudentsDbContext _context;
         public StudentRepository(StudentsDbContext context)
@@ -23,10 +23,12 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
         public int Create(Student student)
         {
             _context.Students.Add(student);
+            
             _context.SaveChanges();
             return student.StudentId;
 
         }
+
         public Student? GetById(int id) 
         { 
             return _context.Students.FirstOrDefault(e => e.StudentId == id);
@@ -43,9 +45,10 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
             _context.SaveChanges();
         }
 
-        //public List<Lecture> GetLecturesByDepartment(Department department)
-        //{
-        
-        //}
+        public Student? GetByCode(int studentCode)
+        {
+            var students = _context.Students.ToList();
+            return students.FirstOrDefault(s => s.StudentCode == studentCode);
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
                         StudentId = int.Parse(csvValues[0]),
                         Name = csvValues[1],
                         LastName = csvValues[2],
-                        StudentCode = csvValues[3],
+                        StudentCode = int.Parse(csvValues[3]),
                         Email = csvValues[4],
                         DepartmentId = int.Parse(csvValues[5])
                     };

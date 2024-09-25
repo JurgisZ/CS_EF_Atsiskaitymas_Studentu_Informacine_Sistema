@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 {
-    internal class DepartmentConfiguration : IEntityTypeConfiguration<Department>
+    public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
@@ -25,10 +25,6 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
                  .HasMaxLength(100)
                  .IsRequired();
 
-            //OtM Students
-            builder.HasMany(s => s.Students)
-                .WithOne(d => d.Department)
-                .HasForeignKey(s => s.StudentId);
 
             //MtM Lectures <DepartmentLectures>
             builder.HasMany(l => l.Lectures)

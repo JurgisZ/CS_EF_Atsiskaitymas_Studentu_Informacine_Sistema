@@ -1,6 +1,6 @@
 ﻿namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities
 {
-    internal class Department
+    public class Department
     {
         public int DepartmentId { get; set; }    
         public required string DepartmentCode { get; set; }     //string. 3 letters + 3 numbers

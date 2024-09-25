@@ -2,11 +2,14 @@
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services.Interfaces
 {
-    internal interface IStudentService
+    public interface IStudentService
     {
-        void AddStudentToDepartment(Student student, int departmentId);
-        int Create(Student student);
-        List<Student> GetAll();
-        Student? GetById(int id);
+        public void AddStudentToDepartment(Student student, int departmentId);
+        public int Create(Student student);
+        public List<Student> GetAll();
+        public Student? GetById(int id);
+        public bool IsValidStudentName(string? name);
+        public bool IsValidStudentLastName(string? name);
+        public int GenerateNewStudentCode();
     }
 }

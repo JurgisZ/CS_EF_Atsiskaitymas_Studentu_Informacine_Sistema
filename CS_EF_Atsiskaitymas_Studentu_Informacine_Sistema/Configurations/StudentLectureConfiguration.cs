@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 {
-    internal class StudentLectureConfiguration : IEntityTypeConfiguration<StudentLecture>
+    public class StudentLectureConfiguration : IEntityTypeConfiguration<StudentLecture>
     {
         public void Configure(EntityTypeBuilder<StudentLecture> builder)
         {

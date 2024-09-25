@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 {
-    internal class StudentConfiguration : IEntityTypeConfiguration<Student>
+    public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {
         public void Configure(EntityTypeBuilder<Student> builder)
         {
@@ -30,11 +30,19 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 
             builder.Property(e => e.StudentCode)
                 .IsRequired()
-                .ValueGeneratedNever()
-                .HasMaxLength(8);            
+                .ValueGeneratedNever();
 
             builder.Property(e => e.Email)
+                .IsRequired(false)
                 .HasMaxLength(255);
+
+            //OtM Students
+            //builder.HasMany(s => s.Students)
+            //    .WithOne(d => d.Department)
+            //    .HasForeignKey(s => s.DepartmentId);    //StudentId buvo
+            builder.HasOne(d => d.Department)
+                .WithMany(s => s.Students)
+                .HasForeignKey(d => d.DepartmentId);
 
         }
     }

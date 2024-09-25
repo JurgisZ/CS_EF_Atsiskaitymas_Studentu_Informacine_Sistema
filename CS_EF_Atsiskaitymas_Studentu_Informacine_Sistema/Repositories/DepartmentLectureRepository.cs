@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
 {
-    internal class DepartmentLectureRepository : IDepartmentLectureRepository
+    public class DepartmentLectureRepository : IDepartmentLectureRepository
     {
         private readonly StudentsDbContext _context;
         public DepartmentLectureRepository(StudentsDbContext context)
@@ -22,6 +22,11 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
         {
             _context.DepartmentLectures.Add(departmentLecture);
             _context.SaveChanges();
+        }
+
+        public List<DepartmentLecture> GetAllDepartmentLectures() 
+        {
+            return _context.DepartmentLectures.ToList();
         }
 
         public void Update(DepartmentLecture departmentLecture)

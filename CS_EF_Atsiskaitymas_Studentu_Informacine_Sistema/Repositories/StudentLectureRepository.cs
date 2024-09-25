@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
 {
-    internal class StudentLectureRepository : IStudentLectureRepository
+    public class StudentLectureRepository : IStudentLectureRepository
     {
         private readonly StudentsDbContext _context;
         public StudentLectureRepository(StudentsDbContext context)
@@ -18,23 +18,6 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
             _context = context;
 
         }
-        //public StudentLecture GetStudentLecturesByDepartment(Department department)
-        //{
-        //    _context.StudentLectures.Include(e => e.Department)
-
-        ////public void AddStudentToDepartmentAndAssignExistingLectures(Student student, Department department)
-        ////    {
-        ////        student.DepartmentId = department.DepartmentId;
-        ////        _studentRepository.Update(student);
-
-        ////        _context.Departments
-        ////        .Include(l => l.Lectures)
-        ////        .Include(s => s.Students)
-        ////        .FirstOrDefault(e => e.DepartmentId == id);
-
-        ////        _studentLectureRepository
-        ////}
-        //}
 
         public void Create(StudentLecture studentLecture)
         {

@@ -46,19 +46,20 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    StudentCode = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    StudentCode = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     DepartmentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.StudentId);
                     table.ForeignKey(
-                        name: "FK_Students_Departments_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_Students_Departments_DepartmentId",
+                        column: x => x.DepartmentId,
                         principalTable: "Departments",
                         principalColumn: "DepartmentId",
                         onDelete: ReferentialAction.Cascade);
@@ -146,8 +147,8 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 columns: new[] { "StudentId", "DepartmentId", "Email", "LastName", "Name", "StudentCode" },
                 values: new object[,]
                 {
-                    { 1, 1, "john.smith@example.com", "Smith", "John", "12345678" },
-                    { 2, 2, "alice.johnson@example.com", "Johnson", "Alice", "87654321" }
+                    { 1, 1, "john.smith@example.com", "Smith", "John", 12345678 },
+                    { 2, 2, "alice.johnson@example.com", "Johnson", "Alice", 87654321 }
                 });
 
             migrationBuilder.InsertData(
@@ -169,6 +170,11 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 name: "IX_StudentLectures_LectureId",
                 table: "StudentLectures",
                 column: "LectureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_DepartmentId",
+                table: "Students",
+                column: "DepartmentId");
         }
 
         /// <inheritdoc />

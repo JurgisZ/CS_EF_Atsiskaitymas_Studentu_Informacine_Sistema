@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities
 {
-    internal class DepartmentLecture
+    public class DepartmentLecture
     {
         public required int DepartmentId { get; set; }
         public Department Department { get; set; }

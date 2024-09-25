@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
 {
-    internal class DepartmentRepository : IDepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
         private readonly StudentsDbContext _context;
         public DepartmentRepository(StudentsDbContext context)
@@ -20,7 +20,6 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
 
         }
 
-        //CREATE - patikrinti ar dpt name yra unikalus
         public int Create(Department department)
         {
             _context.Add(department);
@@ -36,7 +35,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
                 .FirstOrDefault(e => e.DepartmentId == id);
         }
 
-        public Department? GetByName(string departmentName)
+        public Department? GetDepartmentByName(string departmentName)
         {
             return _context.Departments
                 .Include(s => s.Students)
@@ -44,11 +43,12 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
                 .FirstOrDefault(d => d.DepartmentName == departmentName);
         }
 
-        public bool IsCodeInUse(string code)
+        public Department? GetDepartmentByCode(string code)
         {
-            if (_context.Departments.FirstOrDefault(d => d.DepartmentCode == code) == null)
-                return false;
-            return true;
+            return _context.Departments
+                .Include(s => s.Students)
+                .Include(l => l.Lectures)
+                .FirstOrDefault(d => d.DepartmentCode == code);
         }
 
         public List<Department>? GetAll()

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
 {
     [DbContext(typeof(StudentsDbContext))]
-    [Migration("20240923111752_Initial")]
-    partial class Initial
+    [Migration("20240925150443_AddedLectureTime")]
+    partial class AddedLectureTime
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,7 +104,9 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LectureId"));
 
                     b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("time")
+                        .HasDefaultValue(new TimeSpan(0, 1, 30, 0, 0));
 
                     b.Property<string>("LectureName")
                         .IsRequired()
@@ -147,11 +149,12 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
+
                     b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
@@ -165,12 +168,12 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("StudentCode")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                    b.Property<int>("StudentCode")
+                        .HasColumnType("int");
 
                     b.HasKey("StudentId");
+
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Students", (string)null);
 
@@ -182,7 +185,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                             Email = "john.smith@example.com",
                             LastName = "Smith",
                             Name = "John",
-                            StudentCode = "12345678"
+                            StudentCode = 12345678
                         },
                         new
                         {
@@ -191,7 +194,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                             Email = "alice.johnson@example.com",
                             LastName = "Johnson",
                             Name = "Alice",
-                            StudentCode = "87654321"
+                            StudentCode = 87654321
                         });
                 });
 
@@ -250,7 +253,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                 {
                     b.HasOne("CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Entities.Department", "Department")
                         .WithMany("Students")
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

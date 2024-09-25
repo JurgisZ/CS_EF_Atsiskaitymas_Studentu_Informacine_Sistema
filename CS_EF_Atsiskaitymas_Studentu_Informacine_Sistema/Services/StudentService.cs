@@ -7,11 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
 {
-    internal class StudentService : IStudentService
+    public class StudentService : IStudentService
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IStudentLectureRepository _studentLectureRepository;
@@ -49,18 +50,58 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
                 StudentId = student.StudentId
             });
         }
-
         public void AddStudentToDepartmentAndAssignExistingLectures(Student student, Department department)
         {
             student.DepartmentId = department.DepartmentId;
             _studentRepository.Update(student);
-
-            //_context.Departments
-            //.Include(l => l.Lectures)
-            //.Include(s => s.Students)
-            //.FirstOrDefault(e => e.DepartmentId == id);
-
-            
         }
+
+        public int GenerateNewStudentCode() //neuztikrina unikalumo
+        {
+            Random rnd = new Random();
+            return rnd.Next(10000000, 99999999);
+        }
+
+        public bool IsValidStudentName(string? name)
+        {
+            if(string.IsNullOrEmpty(name))
+                return false;
+
+            if (name.Length < 2 || name.Length > 50)
+                return false;
+
+            return true;
+        }
+
+        public bool IsValidStudentLastName(string? name)
+        {
+            if (string.IsNullOrEmpty(name))
+                return false;
+
+            if (name.Length < 2 || name.Length > 50)
+                return false;
+
+            return true;
+        }
+
+        public bool IsValidNewStudentCode(int studentCode)
+        {
+            string codeStr = studentCode.ToString();
+            if(codeStr.Length != 8)
+                return false;
+
+            if(_studentRepository.GetByCode(studentCode) != null)
+                return false;
+
+            return true;
+        }
+        public bool IsValidEmail(string email)
+        {
+            // Regex email validavimui
+            string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(email, pattern);
+        }
+
+
     }
 }

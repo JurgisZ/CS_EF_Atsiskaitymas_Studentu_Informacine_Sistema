@@ -10,7 +10,7 @@ using CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Contexts
 {
-    internal class StudentsDbContext : DbContext
+    public class StudentsDbContext : DbContext
     {
         public bool IsSeeding { get; set; } = true;
         public DbSet<Department> Departments { get; set; }
@@ -41,9 +41,6 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Contexts
 
             if(IsSeeding)
             {
-                Console.WriteLine("SEEDING");
-
-
                 //load departments
                 string departmentsCsvPath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "departments.csv");
                 var departments = CsvHelperService.DepartmentsFromCsv(departmentsCsvPath);
@@ -52,7 +49,11 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Contexts
                 //load students
                 string studentsCsvPath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "students.csv");
                 var students = CsvHelperService.StudentsFromCsv(studentsCsvPath);
+
+                //REMOVE
                 Console.WriteLine($"Students lenght: {students.Count}");
+
+
                 modelBuilder.Entity<Student>().HasData(students);
 
                 //load lectures

@@ -4,6 +4,7 @@ using CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
 {
     [DbContext(typeof(StudentsDbContext))]
-    partial class StudentsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240925125454_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -101,9 +104,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LectureId"));
 
                     b.Property<TimeSpan>("Duration")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("time")
-                        .HasDefaultValue(new TimeSpan(0, 1, 30, 0, 0));
+                        .HasColumnType("time");
 
                     b.Property<string>("LectureName")
                         .IsRequired()

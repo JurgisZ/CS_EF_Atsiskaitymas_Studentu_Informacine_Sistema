@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 {
-    internal class DepartmentLectureConfiguration : IEntityTypeConfiguration<DepartmentLecture>
+    public class DepartmentLectureConfiguration : IEntityTypeConfiguration<DepartmentLecture>
     {
         public void Configure(EntityTypeBuilder<DepartmentLecture> builder)
         {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
 {
-    internal class LectureService : ILectureService
+    public class LectureService : ILectureService
     {
         private readonly ILectureRepository _lectureRepository;
         private readonly IDepartmentLectureRepository _departmentLectureRepository;
@@ -17,6 +17,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
         public LectureService(ILectureRepository repository, IDepartmentLectureRepository departmentLectureRepository)
         {
             _lectureRepository = repository;
+            _departmentLectureRepository = departmentLectureRepository;
         }
 
         public int Create(Lecture lecture)
@@ -28,20 +29,47 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
         {
             return _lectureRepository.GetById(id);
         }
-        public List<Lecture> GetAll()
+        public List<Lecture> GetAllLectures()
         {
             return _lectureRepository.GetAll();
         }
 
-        public void AddLectureToDepartment(Lecture lecture, int departmentId)
+        public List<DepartmentLecture> GetAllDepartmentLectures()
         {
-            _lectureRepository.Create(lecture);
+            return _departmentLectureRepository.GetAllDepartmentLectures();
+        }
+
+        public bool IsValidNewLectureName(string? lectureName) //string 5 or more symbols
+        { 
+            if(string.IsNullOrEmpty(lectureName)) 
+                return false;
+
+            if(lectureName.Length < 5 || lectureName.Length > 255) 
+                return false;
+
+            if (_lectureRepository.GetLectureByName(lectureName) != null)
+                return false;
+
+            return true;
+        }
+
+        public void AssignLectureToDepartment(Lecture lecture, int departmentId)
+        {
+            //VALIDATE LECTURE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             _departmentLectureRepository.Create(
                 new DepartmentLecture()
                 { 
                     DepartmentId = departmentId,
                     LectureId = lecture.LectureId
                 });
+        }
+
+        public bool IsValidTime(TimeSpan time)
+        {
+
+            return time.Hours >= 0 && time.Hours < 24 &&
+                   time.Minutes >= 0 && time.Minutes < 60 &&
+                   time.Seconds == 0;
         }
     }
 }

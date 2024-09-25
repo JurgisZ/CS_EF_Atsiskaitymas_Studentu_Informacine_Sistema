@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 {
-    internal class LectureConfiguration : IEntityTypeConfiguration<Lecture>
+    public class LectureConfiguration : IEntityTypeConfiguration<Lecture>
     {
         public void Configure(EntityTypeBuilder<Lecture> builder)
         {
@@ -18,8 +18,8 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
 
             builder.Property(e => e.LectureId)
                 .ValueGeneratedOnAdd()
-                .IsRequired()
                 .HasMaxLength(255);
+
             builder.Property(e => e.LectureName)
                 .IsRequired();  //Lenght >= 5
 
@@ -27,7 +27,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Configuration
                 .IsRequired();
 
             builder.Property(e => e.Duration)
-            .IsRequired();
+            .HasDefaultValue(TimeSpan.FromHours(1.5)); //Default lecture duration 1:30
 
             builder.HasMany(s => s.Students)
                 .WithMany(l => l.Lectures)
