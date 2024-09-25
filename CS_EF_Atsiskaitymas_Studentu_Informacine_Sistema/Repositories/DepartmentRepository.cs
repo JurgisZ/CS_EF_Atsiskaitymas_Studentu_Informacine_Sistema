@@ -36,6 +36,21 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
                 .FirstOrDefault(e => e.DepartmentId == id);
         }
 
+        public Department? GetByName(string departmentName)
+        {
+            return _context.Departments
+                .Include(s => s.Students)
+                .Include(l => l.Lectures)
+                .FirstOrDefault(d => d.DepartmentName == departmentName);
+        }
+
+        public bool IsCodeInUse(string code)
+        {
+            if (_context.Departments.FirstOrDefault(d => d.DepartmentCode == code) == null)
+                return false;
+            return true;
+        }
+
         public List<Department>? GetAll()
         {
             return _context.Departments.ToList();

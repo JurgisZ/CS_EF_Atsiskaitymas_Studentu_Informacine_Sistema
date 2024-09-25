@@ -60,7 +60,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
             //.Include(s => s.Students)
             //.FirstOrDefault(e => e.DepartmentId == id);
 
-            _studentLectureRepository
+            
         }
     }
 }

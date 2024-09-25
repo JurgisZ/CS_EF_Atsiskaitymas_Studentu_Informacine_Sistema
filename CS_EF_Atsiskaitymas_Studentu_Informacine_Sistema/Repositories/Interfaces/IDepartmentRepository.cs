@@ -4,9 +4,10 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories.Interfac
 {
     internal interface IDepartmentRepository
     {
-        int Create(Department department);
-        List<Department> GetAll();
-        Department? GetById(int id);
-        void Update(Department department);
+        public int Create(Department department);
+        public List<Department> GetAll();
+        public Department? GetById(int id);
+        public Department? GetByName(string departmentName);
+        public void Update(Department department);
     }
 }

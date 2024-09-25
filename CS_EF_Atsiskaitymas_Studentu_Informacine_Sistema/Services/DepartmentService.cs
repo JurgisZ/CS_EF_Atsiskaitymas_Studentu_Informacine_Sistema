@@ -45,6 +45,24 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Services
             return department.DepartmentId;
         }
 
+        public string? GenerateUniqueDepartmentCode(string departmentName)
+        {
+            if (departmentName.Length < 3) return null;
+            //Imam departamento pavadinimo 3 raides pirmas
+            //Generuojam skaičiu 001 - 999
+            string departmentCode = departmentName.Substring(0, 3);
+            
+            Random rand = new Random();
+            int numberPart = rand.Next(1, 1000); // 1-999
+
+            //daugiau patikrinimu
+            string numberPartAsString = numberPart.ToString();
+            if (numberPartAsString.Length == 2) numberPartAsString = string.Join('0', numberPartAsString);
+            if (numberPartAsString.Length == 1) numberPartAsString = string.Join("00", numberPartAsString);
+            departmentCode += numberPartAsString;
+            return departmentCode;
+        }
+
         public Department? GetById(int id)
         {
             return _repository.GetById(id);

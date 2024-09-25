@@ -45,7 +45,7 @@ namespace CS_EF_Atsiskaitymas_Studentu_Informacine_Sistema.Repositories
 
         //public List<Lecture> GetLecturesByDepartment(Department department)
         //{
-
+        
         //}
     }
 }
